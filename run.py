@@ -15,7 +15,7 @@ import cornet
 from PIL import Image
 Image.warnings.simplefilter('ignore')
 
-os.system("taskset -p 0xff %d" % os.getpid())
+os.system("taskset -p 0xffffffff %d" % os.getpid())
 
 np.random.seed(0)
 torch.manual_seed(0)
