@@ -20,6 +20,7 @@ def get_model(model_letter, pretrained=False, map_location=None, **kwargs):
         url = f'https://s3.amazonaws.com/cornet-models/cornet_{model_letter.lower()}-{model_hash}.pth'
         ckpt_data = torch.utils.model_zoo.load_url(url, map_location=map_location)
         model.load_state_dict(ckpt_data['state_dict'])
+    print("Device count: ", torch.cuda.device_count())
     return model
 
 
