@@ -9,6 +9,7 @@ import torch
 import torch.nn as nn
 import torch.utils.model_zoo
 import torchvision
+import torch.distributed as dist
 
 import cornet
 
@@ -46,10 +47,14 @@ parser.add_argument('--step_size', default=10, type=int,
 parser.add_argument('--momentum', default=.9, type=float, help='momentum')
 parser.add_argument('--weight_decay', default=1e-4, type=float,
                     help='weight decay ')
-
+parser.add_argument('--world_size', default=1, type=int, help='')
 
 FLAGS, FIRE_FLAGS = parser.parse_known_args()
 
+ngpus_per_node = torch.cuda.device_count()
+print('Device count: ', ngpus_per_node)
+rank = int(os.environ.get("SLURM_NODEID"))*ngpus_per_node + int(os.environ.get("SLURM_LOCALID")) 
+dist.init_process_group(backend='gloo', init_method='tcp://127.0.0.1:3456', world_size=FLAGS.world_size, rank=rank)
 
 def set_gpus(n=1):
     """
@@ -234,7 +239,6 @@ def test(layer='decoder', sublayer='avgpool', time_step=0, imsize=224):
 
 
 class ImageNetTrain(object):
-
     def __init__(self, model):
         self.name = 'train'
         self.model = model

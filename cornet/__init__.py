@@ -15,7 +15,7 @@ def get_model(model_letter, pretrained=False, map_location=None, **kwargs):
     model_letter = model_letter.upper()
     model_hash = globals()[f'HASH_{model_letter}']
     model = globals()[f'CORnet_{model_letter}'](**kwargs)
-    model = torch.nn.DataParallel(model)
+    model = torch.nn.parallel.DistributedDataParallel(model)
     if pretrained:
         url = f'https://s3.amazonaws.com/cornet-models/cornet_{model_letter.lower()}-{model_hash}.pth'
         ckpt_data = torch.utils.model_zoo.load_url(url, map_location=map_location)
