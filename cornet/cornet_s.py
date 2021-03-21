@@ -45,7 +45,7 @@ class CORblock_S(nn.Module):
         self.nonlin1 = nn.ReLU(inplace=True)
 
         self.conv2 = nn.Conv2d(out_channels * self.scale, out_channels * self.scale,
-                               kernel_size=3, stride=2, padding=1, bias=False)
+                               kernel_size=1, stride=1, padding=1, bias=False)
         self.nonlin2 = nn.ReLU(inplace=True)
 
         self.conv3 = nn.Conv2d(out_channels * self.scale, out_channels,
@@ -92,12 +92,12 @@ class CORblock_S(nn.Module):
 def CORnet_S():
     model = nn.Sequential(OrderedDict([
         ('V1', nn.Sequential(OrderedDict([  # this one is custom to save GPU memory
-            ('conv1', nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
+            ('conv1', nn.Conv2d(3, 64, kernel_size=1, stride=1, padding=0,
                             bias=False)),
             ('norm1', nn.BatchNorm2d(64)),
             ('nonlin1', nn.ReLU(inplace=True)),
-            ('pool', nn.MaxPool2d(kernel_size=3, stride=2, padding=1)),
-            ('conv2', nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1,
+            ('pool', nn.MaxPool2d(kernel_size=1, stride=1, padding=1)),
+            ('conv2', nn.Conv2d(64, 64, kernel_size=1, stride=1, padding=0,
                             bias=False)),
             ('norm2', nn.BatchNorm2d(64)),
             ('nonlin2', nn.ReLU(inplace=True)),
