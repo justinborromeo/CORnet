@@ -37,7 +37,7 @@ class CORblock_S(nn.Module):
 
         self.conv_input = nn.Conv2d(in_channels, out_channels, kernel_size=1, bias=False)
         self.skip = nn.Conv2d(out_channels, out_channels,
-                              kernel_size=1, stride=2, bias=False)
+                              kernel_size=1, stride=1, bias=False)
         self.norm_skip = nn.BatchNorm2d(out_channels)
 
         self.conv1 = nn.Conv2d(out_channels, out_channels * self.scale,
@@ -96,7 +96,7 @@ def CORnet_S():
                             bias=False)),
             ('norm1', nn.BatchNorm2d(64)),
             ('nonlin1', nn.ReLU(inplace=True)),
-            ('pool', nn.MaxPool2d(kernel_size=1, stride=1, padding=0)),
+            ('pool', nn.MaxPool2d(kernel_size=2, stride=1, padding=1)),
             ('conv2', nn.Conv2d(64, 64, kernel_size=1, stride=1, padding=0,
                             bias=False)),
             ('norm2', nn.BatchNorm2d(64)),
