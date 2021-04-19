@@ -92,20 +92,20 @@ class CORblock_S(nn.Module):
 def CORnet_S():
     model = nn.Sequential(OrderedDict([
         ('V1', nn.Sequential(OrderedDict([  # this one is custom to save GPU memory
-            ('conv1', nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
+            ('conv1', nn.Conv2d(3, 130, kernel_size=7, stride=2, padding=3,
                             bias=False)),
-            ('norm1', nn.BatchNorm2d(64)),
+            ('norm1', nn.BatchNorm2d(130)),
             ('nonlin1', nn.ReLU(inplace=True)),
             ('pool', nn.MaxPool2d(kernel_size=3, stride=2, padding=1)),
-            ('conv2', nn.Conv2d(64, 64, kernel_size=3, stride=1, padding=1,
+            ('conv2', nn.Conv2d(130, 130, kernel_size=3, stride=1, padding=1,
                             bias=False)),
-            ('norm2', nn.BatchNorm2d(64)),
+            ('norm2', nn.BatchNorm2d(130)),
             ('nonlin2', nn.ReLU(inplace=True)),
             ('output', Identity())
         ]))),
-        ('V2', CORblock_S(64, 128, times=2)),
-        ('V4', CORblock_S(128, 256, times=4)),
-        ('IT', CORblock_S(256, 512, times=2)),
+        ('V2', CORblock_S(130, 53, times=2)),
+        ('V4', CORblock_S(53, 104, times=4)),
+        ('IT', CORblock_S(104, 296, times=2)),
         ('decoder', nn.Sequential(OrderedDict([
             ('avgpool', nn.AdaptiveAvgPool2d(1)),
             ('flatten', Flatten()),
