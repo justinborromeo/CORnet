@@ -191,7 +191,7 @@ def test(layer='decoder', sublayer='avgpool', time_step=0, imsize=224):
         - time_step (which time step to use for storing features)
         - imsize (resize image to how many pixels, default: 224)
     """
-    model = get_model(pretrained=True)
+    model = get_model(pretrained=False)
     transform = torchvision.transforms.Compose([
                     torchvision.transforms.Resize((imsize, imsize)),
                     torchvision.transforms.ToTensor(),

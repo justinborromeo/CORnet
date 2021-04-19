@@ -109,7 +109,7 @@ def CORnet_S():
         ('decoder', nn.Sequential(OrderedDict([
             ('avgpool', nn.AdaptiveAvgPool2d(1)),
             ('flatten', Flatten()),
-            ('linear', nn.Linear(512, 1000)),
+            ('linear', nn.Linear(296, 1000)),
             ('output', Identity())
         ])))
     ]))
